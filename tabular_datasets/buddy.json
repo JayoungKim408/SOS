@@ -1,0 +1,157 @@
+{
+    "columns":    [
+        {
+            "max": 1552748400.0,
+            "min": 788108400.0,
+            "name": "issue_date",
+            "type": "continuous"
+        },
+        {
+            "max": 1557567840.0,
+            "min": 1424595960.0,
+            "name": "listing_date",
+            "type": "continuous"
+        },
+        {
+            "i2s": [
+                "Black",
+                "White",
+                "Brown",
+                "Brown Tabby",
+                "Tan",
+                "Blue",
+                "Orange Tabby",
+                "Red",
+                "Brown Brindle",
+                "Tricolor",
+                "Blue Tabby",
+                "Tortie",
+                "Calico",
+                "Gray",
+                "Chocolate",
+                "Torbie",
+                "Cream Tabby",
+                "Sable",
+                "Cream",
+                "Fawn",
+                "Yellow",
+                "Buff",
+                "Lynx Point",
+                "Blue Merle",
+                "Seal Point",
+                "Black Brindle",
+                "Gray Tabby",
+                "Black Tabby",
+                "Flame Point",
+                "Brown Merle",
+                "Orange",
+                "Black Smoke",
+                "Gold",
+                "Tortie Point",
+                "Silver",
+                "Red Tick",
+                "Blue Tick",
+                "Blue Point",
+                "Lilac Point",
+                "Silver Tabby",
+                "Yellow Brindle",
+                "Red Merle",
+                "Apricot",
+                "Calico Point",
+                "Blue Tiger",
+                "Blue Cream",
+                "Chocolate Point",
+                "Green",
+                "Pink",
+                "Blue Smoke",
+                "Brown Tiger",
+                "Agouti",
+                "Silver Lynx Point",
+                "Liver",
+                "Liver Tick",
+                "Black Tiger"
+            ],
+            "name": "color_type",
+            "size": 56,
+            "type": "categorical"
+        },
+        {
+            "max": 1.0,
+            "min": 0.0,
+            "name": "length(m)",
+            "type": "continuous"
+        },
+        {
+            "max": 50.0,
+            "min": 5.0,
+            "name": "height(cm)",
+            "type": "continuous"
+        },
+        {
+            "i2s": [
+                "0",
+                "13",
+                "7",
+                "16",
+                "15",
+                "18",
+                "17",
+                "9",
+                "12",
+                "11",
+                "1",
+                "8",
+                "2",
+                "6",
+                "4",
+                "10",
+                "5",
+                "19",
+                "14",
+                "3"
+            ],
+            "name": "X1",
+            "size": 20,
+            "type": "categorical"
+        },
+        {
+            "i2s": [
+                "1",
+                "9",
+                "7",
+                "4",
+                "2",
+                "3",
+                "8",
+                "5",
+                "6",
+                "0"
+            ],
+            "name": "X2",
+            "size": 10,
+            "type": "categorical"
+        },
+        {
+            "i2s": [
+                "2",
+                "1",
+                "4",
+                "0"
+            ],
+            "name": "pet_category",
+            "size": 4,
+            "type": "categorical"
+        },
+        {
+            "i2s": [
+                "0.0",
+                "1.0",
+                "2.0"
+            ],
+            "name": "label",
+            "size": 3,
+            "type": "categorical"
+        }
+    ], 
+    "problem_type": "multiclass_classification"
+}
