@@ -1,7 +1,7 @@
 # SOS: Score-based Oversampling for Tabular Data
 
 
-This repo contains the official implementation for the paper [{SOS: Score-based Oversampling for Tabular Data}](https://openreview.net/forum?id=PxTIG12RRHS)
+This repo contains the official implementation for the paper [SOS: Score-based Oversampling for Tabular Data]
 
 by [Jayoung Kim](jayoung.kim@yonsei.ac.kr), [Chaejeong Lee](chaejeong_lee@yonsei.ac.kr), [Yehjin Shin](yehjin.shin@gmail.com), [Sewon Park](sw0413.park@samsung.com), [Minjung Kim](mj100.kim@samsung.com), [Noseong Park](noseong@yonsei.ac.kr) and [Jihoon Cho](jihoon1.cho@samsung.com)
 
