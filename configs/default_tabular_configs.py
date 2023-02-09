@@ -1,5 +1,17 @@
+###########################################################################
+## Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
+## Released under the Samsung SDS source code license.
+## For details on the scope of licenses, please refer to the License.md file 
+## (https://github.com/JayoungKim408/SOS/License.md).
+##
+## Code Modifications
+## The configuration options of get_configs() was modified 
+## according to tabular datasets.
+###########################################################################
+
 import ml_collections
 import torch
+
 
 
 def get_default_configs():
@@ -12,7 +24,7 @@ def get_default_configs():
   training.snapshot_freq = 1000
 
   training.log_freq = 50
-  training.eval_freq = 100
+  training.eval_freq = 500
   ## store additional checkpoints for preemption in cloud computing environments
   training.snapshot_freq_for_preemption = 100
   ## produce samples at each snapshot.

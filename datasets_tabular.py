@@ -1,7 +1,14 @@
+###########################################################################
+## Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
+## Released under the Samsung SDS source code license.
+## For details on the scope of licenses, please refer to the License.md file 
+## (https://github.com/JayoungKim408/SOS/License.md).
+###########################################################################
+
+
 import json
 import logging
 import os
-import urllib
 
 import numpy as np
 import pandas as pd

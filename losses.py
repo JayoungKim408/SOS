@@ -13,6 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
+###########################################################################
+## Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
+## Released under the Samsung SDS source code license.
+## For details on the scope of licenses, please refer to the License.md file 
+## (https://github.com/JayoungKim408/SOS/License.md).
+##
+## Code Modifications.
+### The indexing parts are revised since tabular datasets are 2-D arrays or 
+## tensors in get_sde_loss_fn, get_smld_loss_fn, and get_ddpm_loss_fn.
+###########################################################################
+
+
+
 """All functions related to loss computation and optimization.
 """
 
@@ -21,7 +35,7 @@ import torch.optim as optim
 import numpy as np
 from models import utils as mutils
 from sde_lib import VESDE, VPSDE
-from matplotlib import pyplot as plt
+
 
 def get_optimizer(config, params):
   """Returns a flax optimizer object based on `config`."""
@@ -83,8 +97,7 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     score_fn = mutils.get_score_fn(sde, model, train=train, continuous=continuous)
     t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
     z = torch.randn_like(batch) 
-    mean, std = sde.marginal_prob(batch, t)
-    
+    mean, std = sde.marginal_prob(batch, t) 
     perturbed_data = mean + std[:, None] * z
     score = score_fn(perturbed_data, t)
     

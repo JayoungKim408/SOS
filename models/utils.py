@@ -13,6 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+###########################################################################
+## Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
+## Released under the Samsung SDS source code license.
+## For details on the scope of licenses, please refer to the License.md file 
+## (https://github.com/JayoungKim408/SOS/License.md).
+##
+## Code Modifications.
+### Two parts in 'get_score_fn()' are revised: labels and std objects.
+### Two functions are added:
+## create_model_discriminator and calc_gradient_penalty.
+###########################################################################
+
+
 """All functions and modules related to model definition.
 """
 

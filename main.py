@@ -13,6 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+###########################################################################
+## Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
+## Released under the Samsung SDS source code license.
+## For details on the scope of licenses, please refer to the License.md file 
+## (https://github.com/JayoungKim408/SOS/License.md).
+##
+## Code Modifications
+### The tensorflow is not imported.
+### The 'eval' mode is replaced by the 'fine-tune'. Then, the fine-tune pipeline 
+## is also added ('run_lib.fine_tune()').
+###########################################################################
+
 """Training and evaluation"""
 
 import run_lib as run_lib
@@ -23,7 +35,7 @@ from absl import flags
 from ml_collections.config_flags import config_flags
 import logging
 import os
-import tensorflow as tf
+
 FLAGS = flags.FLAGS
 
 config_flags.DEFINE_config_file(
@@ -31,14 +43,13 @@ config_flags.DEFINE_config_file(
 flags.DEFINE_string("workdir", None, "Work directory.")
 flags.DEFINE_string("workfile", None, "Work file name.")
 flags.DEFINE_enum("mode", None, ["train", "fine_tune"], "Running mode: train or eval or fine_tune")
-
 flags.mark_flags_as_required(["workdir", "config", "mode"])
 
 
 def main(argv):
   if FLAGS.mode == "train":
     # Create the working directory
-    tf.io.gfile.makedirs(FLAGS.workdir)
+    os.makedirs(FLAGS.workdir, exist_ok=True)
     # Set logger so that it outputs to both console and file
     # Make logging work for both disk and Google Cloud Storage
     gfile_stream = open(os.path.join(FLAGS.workdir, 'stdout.txt'), 'w')
@@ -52,7 +63,7 @@ def main(argv):
     run_lib.train(FLAGS.config, FLAGS.workdir)
 
   elif FLAGS.mode == "fine_tune":
-    tf.io.gfile.makedirs(FLAGS.workdir)
+    os.makedirs(FLAGS.workdir, exist_ok=True)
     gfile_stream = open(os.path.join(FLAGS.workdir, f'{FLAGS.workfile}.txt'), 'w')
     handler = logging.StreamHandler(gfile_stream)
     formatter = logging.Formatter('%(levelname)s - %(filename)s - %(asctime)s - %(message)s')

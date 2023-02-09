@@ -15,7 +15,20 @@
 
 # pylint: skip-file
 
-from torch.nn.functional import embedding
+###########################################################################
+## Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
+## Released under the Samsung SDS source code license.
+## For details on the scope of licenses, please refer to the License.md file 
+## (https://github.com/JayoungKim408/SOS/License.md).
+##
+## Code Modifications.
+### Some objects are removed:
+## ResnetBlockDDPM, esnetBlockBigGAN, Combine, conv3x3, conv1x1, 
+## and get_normalization. 
+### A function (or class object), NCSNpp is revised based on 
+## new linear layers and tabular datasets.
+###########################################################################
+
 from . import utils, layers, layerspp 
 import torch.nn as nn
 import torch

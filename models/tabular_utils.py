@@ -1,9 +1,16 @@
+###########################################################################
+## Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
+## Released under the Samsung SDS source code license.
+## For details on the scope of licenses, please refer to the License.md file 
+## (https://github.com/JayoungKim408/SOS/License.md).
+###########################################################################
+
+
 import numpy as np
 import pandas as pd
-from sklearn.mixture import BayesianGaussianMixture
 import torch
 import torch.nn.functional as F
-# from octgan.data import *
+
 
 CATEGORICAL = "categorical"
 CONTINUOUS = "continuous"

@@ -14,7 +14,19 @@
 # limitations under the License.
 
 # Lint as: python3
-"""Training NCSNv3 on CIFAR-10 with continuous sigmas."""
+
+###########################################################################
+## Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
+## Released under the Samsung SDS source code license.
+## For details on the scope of licenses, please refer to the License.md file 
+## (https://github.com/JayoungKim408/SOS/License.md).
+##
+## Code Modifications
+## The configuration options of get_configs() was modified 
+## according to tabular datasets.
+###########################################################################
+
+"""Training NCSN++_tabular on shoppers dataset with sub-VP SDE."""
 
 from configs.default_tabular_configs import get_default_configs
 

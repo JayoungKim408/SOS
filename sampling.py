@@ -15,6 +15,23 @@
 
 # pylint: skip-file
 # pytype: skip-file
+
+###########################################################################
+## Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
+## Released under the Samsung SDS source code license.
+## For details on the scope of licenses, please refer to the License.md file 
+## (https://github.com/JayoungKim408/SOS/License.md).
+##
+## Code Modifications.
+### A 'train' argument is added to 'shared_predictor_update_fn()' and 
+## 'get_pc_sampler()' functions.
+### The indexing parts are revised since tabular datasets are 2-D arrays or 
+## tensors in EulerMaruyamaPredictor, ReverseDiffusionPredictor,
+## AncestralSamplingPredictor, LangevinCorrector, and AnnealedLangevinDynamics.
+### Some parts related to sde.prior.sampling in get_pc_sampler are revised.
+###########################################################################
+
+
 """Various sampling methods."""
 import functools
 
@@ -181,14 +198,11 @@ class EulerMaruyamaPredictor(Predictor):
     super().__init__(sde, score_fn, probability_flow)
 
   def update_fn(self, x, t):
-
     dt = -1. / self.rsde.N
     z = torch.randn_like(x)
     drift, diffusion = self.rsde.sde(x, t)
-
     x_mean = x + drift * dt
-    x = x_mean + diffusion[:, None] * np.sqrt(-dt) * z
-
+    x = x_mean + diffusion[:, None] * np.sqrt(-dt) * z # revision
     return x, x_mean
 
 
@@ -201,8 +215,7 @@ class ReverseDiffusionPredictor(Predictor):
     f, G = self.rsde.discretize(x, t)
     z = torch.randn_like(x)
     x_mean = x - f
-    x = x_mean + G[:, None] * z
-
+    x = x_mean + G[:, None] * z # revision
     return x, x_mean
 
 
@@ -222,13 +235,10 @@ class AncestralSamplingPredictor(Predictor):
     sigma = sde.discrete_sigmas[timestep].to(t.device)
     adjacent_sigma = torch.where(timestep == 0, torch.zeros_like(t), sde.discrete_sigmas.to(t.device)[timestep - 1])
     score = self.score_fn(x, t)
-    x_mean = x + score * (sigma ** 2 - adjacent_sigma ** 2)[:, None]
-
+    x_mean = x + score * (sigma ** 2 - adjacent_sigma ** 2)[:, None] # revision
     std = torch.sqrt((adjacent_sigma ** 2 * (sigma ** 2 - adjacent_sigma ** 2)) / (sigma ** 2))
     noise = torch.randn_like(x)
-
-    x = x_mean + std[:, None] * noise
-
+    x = x_mean + std[:, None] * noise # revision
     return x, x_mean
 
   def vpsde_update_fn(self, x, t):
@@ -236,10 +246,9 @@ class AncestralSamplingPredictor(Predictor):
     timestep = (t * (sde.N - 1) / sde.T).long()
     beta = sde.discrete_betas.to(t.device)[timestep]
     score = self.score_fn(x, t)
-    x_mean = (x + beta[:, None] * score) / torch.sqrt(1. - beta)[:, None]
+    x_mean = (x + beta[:, None] * score) / torch.sqrt(1. - beta)[:, None] # revision
     noise = torch.randn_like(x)
-    x = x_mean + torch.sqrt(beta)[:, None] * noise
-
+    x = x_mean + torch.sqrt(beta)[:, None] * noise # revision
     return x, x_mean
 
   def update_fn(self, x, t):
@@ -286,9 +295,8 @@ class LangevinCorrector(Corrector):
       grad_norm = torch.norm(grad.reshape(grad.shape[0], -1), dim=-1).mean()
       noise_norm = torch.norm(noise.reshape(noise.shape[0], -1), dim=-1).mean()
       step_size = (target_snr * noise_norm / grad_norm) ** 2 * 2 * alpha
-
-      x_mean = x + step_size[:, None] * grad
-      x = x_mean + torch.sqrt(step_size * 2)[:, None] * noise
+      x_mean = x + step_size[:, None] * grad # revision
+      x = x_mean + torch.sqrt(step_size * 2)[:, None] * noise # revision
 
     return x, x_mean
 
@@ -324,9 +332,8 @@ class AnnealedLangevinDynamics(Corrector):
       grad = score_fn(x, t)
       noise = torch.randn_like(x)
       step_size = (target_snr * std) ** 2 * 2 * alpha
-
-      x_mean = x + step_size[:, None] * grad
-      x = x_mean + noise * torch.sqrt(step_size * 2)[:, None]
+      x_mean = x + step_size[:, None] * grad # revision
+      x = x_mean + noise * torch.sqrt(step_size * 2)[:, None] # revision
 
     return x, x_mean
 
@@ -344,7 +351,7 @@ class NoneCorrector(Corrector):
 
 def shared_predictor_update_fn(x, t, sde, model, predictor, probability_flow, continuous, train=False):
   """A wrapper that configures and returns the update function of predictors."""
-  score_fn = mutils.get_score_fn(sde, model, train=train, continuous=continuous)
+  score_fn = mutils.get_score_fn(sde, model, train=train, continuous=continuous) # revision
   if predictor is None:
     # Corrector-only sampler
     predictor_obj = NonePredictor(sde, score_fn, probability_flow)
@@ -410,14 +417,14 @@ def get_pc_sampler(sde, shape, predictor, corrector, inverse_scaler, snr,
     Returns:
       Samples, number of function evaluations.
     """
-    timesteps = torch.linspace(sde.T, eps, sde.N, device=device)
+    timesteps = torch.linspace(sde.T, eps, sde.N, device=device) 
 
-    if z is not None:
-      x = z.to(timesteps.device).type(torch.float32)
+    if z is not None: 
+      x = z.to(timesteps.device).type(torch.float32) # revision
       size = len(x)
     else:
       size = sample_size if sample_size else shape[0]
-      x = sde.prior_sampling((size, shape[1])).to(device)
+      x = sde.prior_sampling((size, shape[1])).to(device) # revision
         
     
     for i in range(sde.N):

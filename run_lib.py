@@ -14,17 +14,30 @@
 # limitations under the License.
 
 # pylint: skip-file
-"""Training and evaluation for score-based generative models. """
 
-import gc
-import io
+###########################################################################
+## Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
+## Released under the Samsung SDS source code license.
+## For details on the scope of licenses, please refer to the License.md file 
+## (https://github.com/JayoungKim408/SOS/License.md).
+##
+## Code Modifications.
+### Some libraries are not imported: gc, io, time, tensorflow, 
+## tensorflow_datasets and torchvision.utils.
+### The make_noise function is added.
+### The train function trains two SGMs, one for the non-target (or major) 
+## class and the other for the target (or minor) class to oversample.
+### The fine_tune function performs a post-processing procedure which further 
+## enhances the oversampling quality after training the two score networks.
+###########################################################################
+
+"""Training and fine-tuning for SOS. """
+
+
 import os
-import time
 import math
 
 import numpy as np
-import tensorflow as tf
-import tensorflow_gan as tfgan
 import logging
 # Keep the import below for registering all model definitions
 from models import ncsnpp_tabular
@@ -86,19 +99,19 @@ def train(config, workdir):
   torch.backends.cudnn.deterministic = True
   torch.backends.cudnn.benchmark = False
   np.random.seed(randomSeed)
-  tf.random.set_seed(randomSeed)
+  # tf.random.set_seed(randomSeed)
 
   # Create directories for experimental logs
   sample_dir = os.path.join(workdir, "samples")
-  tf.io.gfile.makedirs(sample_dir)
+  os.makedirs(sample_dir, exist_ok=True)
 
   tb_dir = os.path.join(workdir, "train-tensorboard")
-  tf.io.gfile.makedirs(tb_dir)
+  os.makedirs(tb_dir, exist_ok=True)
   writer = tensorboard.SummaryWriter(tb_dir)
 
   # Create checkpoints directory
   checkpoint_dir = os.path.join(workdir, "checkpoints") 
-  tf.io.gfile.makedirs(checkpoint_dir)
+  os.makedirs(checkpoint_dir, exist_ok=True)
 
   # Build data iterators
   train_data_total, eval_ds, (transformer, meta), major_label, minor_label, num_classes = datasets.get_dataset(config,
@@ -116,8 +129,7 @@ def train(config, workdir):
     print("the number of parameters", num_params)
 
     checkpoint_meta_dir = os.path.join(workdir, "checkpoints-meta", f"checkpoint_{label}.pth")
-    tf.io.gfile.makedirs(os.path.dirname(checkpoint_meta_dir))
-
+    os.makedirs(os.path.dirname(checkpoint_meta_dir), exist_ok=True)
     ema = ExponentialMovingAverage(score_model.parameters(), decay=config.model.ema_rate)
     optimizer = losses.get_optimizer(config, score_model.parameters())
     state = dict(optimizer=optimizer, model=score_model, ema=ema, step=0)
@@ -335,10 +347,10 @@ def fine_tune(config, workdir):
   torch.backends.cudnn.deterministic = True
   torch.backends.cudnn.benchmark = False
   np.random.seed(randomSeed)
-  tf.random.set_seed(randomSeed)
+  # tf.random.set_seed(randomSeed)
 
   tb_dir = os.path.join(workdir, "fine_tune-tensorboard")
-  tf.io.gfile.makedirs(tb_dir)
+  os.makedirs(tb_dir, exist_ok=True)
   writer = tensorboard.SummaryWriter(tb_dir)
 
   checkpoint_dir = os.path.join(workdir, "checkpoints") 

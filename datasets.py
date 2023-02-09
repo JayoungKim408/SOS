@@ -14,15 +14,29 @@
 # limitations under the License.
 
 # pylint: skip-file
+
+###########################################################################
+## Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
+## Released under the Samsung SDS source code license.
+## For details on the scope of licenses, please refer to the License.md file 
+## (https://github.com/JayoungKim408/SOS/License.md).
+##
+## Code Modifications.
+### Some libraries are not imported: jax, tensorflow, and tensorflow_datasets.
+### New modules are imported: models.tabular_utils, and datasets_tabular.
+### Some functions are removed:
+## crop_resize, resize_small, and central_crop. 
+### A function, get_dataset() is newly defined based on tabular datasets.
+###########################################################################
+
+
 """Return training and evaluation/test datasets from config files."""
-# import jax
+
 import torch
 import numpy as np
-import tensorflow as tf
-import tensorflow_datasets as tfds
 from models.tabular_utils import GeneralTransformer
 from datasets_tabular import load_data
-from collections import Counter
+
 
 def get_data_scaler(config):
   """Data normalizer. Assume data are always in [0, 1]."""
@@ -40,36 +54,6 @@ def get_data_inverse_scaler(config):
     return lambda x: (x + 1.) / 2.
   else:
     return lambda x: x
-
-
-def crop_resize(image, resolution):
-  """Crop and resize an image to the given resolution."""
-  crop = tf.minimum(tf.shape(image)[0], tf.shape(image)[1])
-  h, w = tf.shape(image)[0], tf.shape(image)[1]
-  image = image[(h - crop) // 2:(h + crop) // 2,
-          (w - crop) // 2:(w + crop) // 2]
-  image = tf.image.resize(
-    image,
-    size=(resolution, resolution),
-    antialias=True,
-    method=tf.image.ResizeMethod.BICUBIC)
-  return tf.cast(image, tf.uint8)
-
-
-def resize_small(image, resolution):
-  """Shrink an image to the given resolution."""
-  h, w = image.shape[0], image.shape[1]
-  ratio = resolution / min(h, w)
-  h = tf.round(h * ratio, tf.int32)
-  w = tf.round(w * ratio, tf.int32)
-  return tf.image.resize(image, [h, w], antialias=True)
-
-
-def central_crop(image, size):
-  """Crop the center of an image to the given size."""
-  top = (image.shape[0] - size) // 2
-  left = (image.shape[1] - size) // 2
-  return tf.image.crop_to_bounding_box(image, top, left, size, size)
 
 
 def get_dataset(config, uniform_dequantization=False, evaluation=False):
