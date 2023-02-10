@@ -17,7 +17,7 @@
 
 ###########################################################################
 ## Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
-## Released under the Samsung SDS source code license.
+## Released under the Samsung SDS Public License V1.0.
 ## For details on the scope of licenses, please refer to the License.md file 
 ## (https://github.com/JayoungKim408/SOS/License.md).
 ##

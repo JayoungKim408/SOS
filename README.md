@@ -1,7 +1,7 @@
 # SOS: Score-based Oversampling for Tabular Data
 
 
-This repo contains the official implementation for the paper [SOS: Score-based Oversampling for Tabular Data](https://arxiv.org/abs/2206.08555)
+This repo contains the official implementation for the paper [SOS: Score-based Oversampling for Tabular Data]
 
 by [Jayoung Kim](jayoung.kim@yonsei.ac.kr), [Chaejeong Lee](chaejeong_lee@yonsei.ac.kr), [Yehjin Shin](yehjin.shin@gmail.com), [Sewon Park](sw0413.park@samsung.com), [Minjung Kim](mj100.kim@samsung.com), [Noseong Park](noseong@yonsei.ac.kr) and [Jihoon Cho](jihoon1.cho@samsung.com)
 
@@ -58,7 +58,9 @@ This work is built upon some previous papers which might also interest you:
 ## License
 
 Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
+
 Released under the Samsung SDS Public License V1.0. 
+
 For details on the scope of licenses, please refer to the License.md file (https://github.com/JayoungKim408/SOS/blob/master/License.md).
 
 This project was basically developed based on previous open-source codes: https://github.com/yang-song/score_sde_pytorch.
