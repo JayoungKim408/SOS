@@ -59,7 +59,7 @@ This work is built upon some previous papers which might also interest you:
 
 Copyright (C) 2023 Samsung SDS Co., Ltd. All rights reserved.
 Released under the Samsung SDS Public License V1.0. 
-For details on the scope of licenses, please refer to the License.md file (https://github.com/JayoungKim408/SOS/blob/main/License.md).
+For details on the scope of licenses, please refer to the License.md file (https://github.com/JayoungKim408/SOS/blob/master/License.md).
 
 This project was basically developed based on previous open-source codes: https://github.com/yang-song/score_sde_pytorch.
 
